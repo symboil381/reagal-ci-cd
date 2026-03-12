@@ -25,7 +25,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run order flow test
-        run: npx playwright test home.spec.ts
+        run: npx playwright test order-flow.spec.ts
 
       - name: Upload report on failure
         if: failure()
