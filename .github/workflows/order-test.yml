@@ -2,12 +2,14 @@ name: WooCommerce Order Test
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # every 5 minutes (change to '0 * * * *' for hourly)
+    - cron: '0 * * * *'  # every hour
   workflow_dispatch:         # manual trigger from GitHub Actions UI
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repository
@@ -17,6 +19,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: 'npm'
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
       - name: Install dependencies
         run: npm ci

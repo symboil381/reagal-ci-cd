@@ -9,7 +9,7 @@ const CUSTOMER = {
 test('Order flow — product page → checkout → confirmation', async ({ page }) => {
 
   // STEP 1: Go to product page
-  await page.goto('https://regalwatchbd.com/product/wooden-wall-clock-split-panel-design/');
+  await page.goto('https://regalwatchbd.com/product/wooden-wall-clock-split-panel-design/', { timeout: 10000 });
   await expect(page.getByRole('button', { name: 'Buy Now' })).toBeVisible();
 
   // STEP 2: Click Buy Now (goes directly to checkout)
