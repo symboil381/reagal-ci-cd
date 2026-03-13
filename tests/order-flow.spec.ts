@@ -11,29 +11,22 @@ test('Order flow — product page → checkout → confirmation', async ({ page 
   // STEP 1: Go to product page
   await page.goto('https://regalwatchbd.com/product/wooden-wall-clock-split-panel-design/', { timeout: 10000 });
   await expect(page.getByRole('button', { name: 'Buy Now' })).toBeVisible();
-  await page.waitForTimeout(2000);
 
   // STEP 2: Click Buy Now (goes directly to checkout)
   await page.getByRole('button', { name: 'Buy Now' }).click();
   await expect(page).toHaveURL(/checkout/);
-  await page.waitForTimeout(2000);
 
   // STEP 3: Fill billing details
   await page.getByRole('textbox', { name: 'Name' }).fill(CUSTOMER.name);
-  await page.waitForTimeout(500);
   await page.getByRole('textbox', { name: 'Street address' }).fill(CUSTOMER.address);
-  await page.waitForTimeout(500);
   await page.getByRole('textbox', { name: 'Phone' }).fill(CUSTOMER.phone);
-  await page.waitForTimeout(2000);
 
   // STEP 4: Select shipping zone
   await page.getByRole('radio', { name: 'Outside Dhaka' }).check();
   await expect(page.getByRole('radio', { name: 'Outside Dhaka' })).toBeChecked();
-  await page.waitForTimeout(2000);
 
   // STEP 5: Place order
   await page.getByRole('button', { name: 'Place order' }).click();
-  await page.waitForTimeout(2000);
 
   // STEP 6: Confirm order success
 await expect(page).toHaveURL(/thank-you\/order-received/);
